@@ -1,0 +1,132 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <h1>Meansible</h1>
+    <p class="lead">An easy-to-use interface to generate Ansible playbooks for MEAN projects.</p>
+    <img src="../assets/images/vagrant-virtualbox-ubuntu-post-title.png" alt="I'm Yeoman">
+  </div>
+</header>
+
+<div class="main container">
+  <div class="row">
+    <div class="col-md-3">
+
+      <ul class="list-group">
+        <li class="list-group-item">
+          Vagrant Settings
+        </li>
+        <li class="list-group-item">
+          Node.js
+        </li>
+        <li class="list-group-item">
+          Database
+        </li>
+        <li class="list-group-item">
+          NPM Global Packages
+        </li>
+        <li class="list-group-item">
+          Default Packages
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-9">
+      <form>
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>Vagrant Settings</strong></div>
+          <div class="panel-body">
+            <div class="form-group col-sm-12">
+                <label class="control-label" for="select">Base Box:</label>
+                <select class="form-control" id="select">
+                          <option>10.04 LTS</option>
+                          <option>12.04 LTS</option>
+                          <option>14.04 LTS</option>
+                </select>
+            </div>
+
+            <div class="form-group col-sm-6">
+
+                <label class="control-label" for="boxName">Name:</label>
+                <input class="form-control" id="boxName" type="text" value="Default">
+
+            </div>
+
+            <div class="form-group col-sm-6">
+              <label class="control-label" for="boxIp">IP:</label>
+              <input class="form-control" id="boxIp" type="text" value="192.168.33.99">
+            </div>
+
+            <div class="form-group col-sm-6">
+              <label class="control-label" for="boxMemory">Memory:</label>
+              <input class="form-control" id="boxMemory" type="text" value="512">
+            </div>
+
+            <div class="form-group col-sm-6">
+              <label class="control-label" for="boxSharedFolder">Shared Folder:</label>
+              <input class="form-control" id="boxSharedFolder" type="text" value="./">
+            </div>
+            </div>
+          </div>
+
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>Node.js</strong></div>
+          <div class="panel-body">
+            <div class="form-group">
+              <p>Which Method Do You Prefer?</p>
+              <label class="radio-inline"><input type="radio" name="optradio">NVM</label>
+              <label class="radio-inline"><input type="radio" name="optradio">PPA</label>
+              <label class="radio-inline"><input type="radio" name="optradio">Binary</label>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>Database</strong></div>
+          <div class="panel-body">
+            <label class="checkbox-inline"><input type="checkbox" value="">Install MongoDB</label>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>NPM Global Packages</strong></div>
+          <div class="panel-body">
+            <label for="sel2">Select packages from list (hold shift to select more than one):</label>
+            <select multiple class="form-control" id="sel2">
+              <option>Yeoman</option>
+              <option>Bower</option>
+              <option>Grunt</option>
+              <option>Fullstack Generator</option>
+              <option>Express Generator</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>Default Packages</strong></div>
+          <div class="panel-body">
+            <p>Following packages will get install by default:</p>
+            <ul>
+              <li>Git</li>
+              <li>Curl</li>
+              <li>build-essential</li>
+              <li>libssl-dev</li>
+              <li>python-software-properties</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <span href="#" class="btn btn-primary col-sm-12 glyphicon glyphicon-cloud-download" role="button"> Download</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+      <p>Meansible v0.0.1 |
+        <a href="https://twitter.com/meansible">@meansible</a> |
+         <a href="https://github.com/jasnantp/meansible/issues?state=open">Issues</a></p>
+  </div>
+</footer>

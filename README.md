@@ -21,3 +21,4 @@ yo
 generator-angular-fullstack
 
 MongoDB: Latest version
+[MIT License](LICENSE) © 2015 Jasnan (http://twitter.com/meansible).

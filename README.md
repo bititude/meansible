@@ -1,3 +1,5 @@
+## [Meansible](http://meansible.com)
+
 Ansible playbooks for provisioning a MEAN box. Following packages will be installed
 
 Basic Tools:
@@ -19,3 +21,4 @@ yo
 generator-angular-fullstack
 
 MongoDB: Latest version
+[MIT License](LICENSE) © 2015 Jasnan (http://twitter.com/meansible).

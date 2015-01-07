@@ -35,3 +35,23 @@ exports.index = function(req, res) {
   }
   ]);
 };
+
+
+// Retrieve NodeJS versions
+exports.getNodeVersions = function(req, res) {
+
+  var url = "http://nodejs.org/dist/npm-versions.txt";
+  
+  res.json([
+  {
+  name : 'Development Tools',
+  info : 'stable'
+  }, {
+  name : 'Server and Client integration',
+  info : 'unstable'
+  }, {
+  name : 'Smart Build System',
+  info : 'old'
+  }
+  ]);
+};

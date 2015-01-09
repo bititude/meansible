@@ -32,6 +32,7 @@
     </div>
 
     <div class="col-md-9">
+   
       <form>
         <div class="panel panel-default">
           <div class="panel-heading"><strong>Vagrant Settings</strong></div>
@@ -39,7 +40,7 @@
             <div class="form-group col-sm-12">
                 <label class="control-label" for="select">Base Box:</label>
                 <select class="form-control" id="ListOfBoxes"                 
-                        ng-model="box.selected" 
+                        ng-model="data.boxname" 
                         ng-options="box.name as box.label group by box.make for box in boxes"
                         >                 
                 </select>
@@ -47,24 +48,28 @@
 
             <div class="form-group col-sm-6">
 
-                <label class="control-label" for="boxName">Name:</label>
-                <input class="form-control" id="boxName" type="text" placeholder="Default">
+                <label class="control-label" for="hostName">Name:</label>
+                <input class="form-control" id="hostName" type="text" placeholder="Default"
+                ng-model="data.hostname">
 
             </div>
 
             <div class="form-group col-sm-6">
               <label class="control-label" for="boxIp">IP:</label>
-              <input class="form-control" id="boxIp" type="text" placeholder="192.168.33.99">
+              <input class="form-control" id="boxIp" type="text" placeholder="192.168.33.99"
+              ng-model="data.hostip">
             </div>
 
             <div class="form-group col-sm-6">
               <label class="control-label" for="boxMemory">Memory:</label>
-              <input class="form-control" id="boxMemory" type="text" placeholder="512">
+              <input class="form-control" id="boxMemory" type="text" placeholder="512"
+              ng-model="data.memory">
             </div>
 
             <div class="form-group col-sm-6">
               <label class="control-label" for="boxSharedFolder">Shared Folder:</label>
-              <input class="form-control" id="boxSharedFolder" type="text" placeholder="./">
+              <input class="form-control" id="boxSharedFolder" type="text" placeholder="./"
+              ng-model="data.sharefolder">
             </div>
             </div>
           </div>
@@ -116,7 +121,7 @@
         </div>
 
         <div class="form-group">
-          <span href="#" class="btn btn-primary col-sm-12 glyphicon glyphicon-cloud-download" role="button"> Download</span>
+          <span href="#" class="btn btn-primary col-sm-12 glyphicon glyphicon-cloud-download" role="button" ng-click="fileDownload(data)"> Download</span>
         </div>
       </form>
     </div>

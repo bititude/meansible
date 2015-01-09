@@ -55,3 +55,11 @@ exports.getNodeVersions = function(req, res) {
   }
   ]);
 };
+
+
+exports.downloadgen = function(req,res){
+  console.log("Somehow I reached here..");
+  console.log(req.body)
+  var outputFile = '/assets/downloads/first.zip';
+  res.send({url : outputFile});
+}

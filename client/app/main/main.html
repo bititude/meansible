@@ -32,17 +32,17 @@
     </div>
 
     <div class="col-md-9">
-   
+
       <form>
         <div class="panel panel-default">
           <div class="panel-heading"><strong>Vagrant Settings</strong></div>
           <div class="panel-body">
             <div class="form-group col-sm-12">
                 <label class="control-label" for="select">Base Box:</label>
-                <select class="form-control" id="ListOfBoxes"                 
-                        ng-model="data.boxname" 
+                <select class="form-control" id="ListOfBoxes"
+                        ng-model="data.boxname"
                         ng-options="box.name as box.label group by box.make for box in boxes"
-                        >                 
+                        >
                 </select>
             </div>
 
@@ -80,23 +80,35 @@
           <div class="panel-body">
             <div class="form-group">
               <p>Which Method Do You Prefer?</p>
-              <label class="radio-inline"><input type="radio" name="optradio">NVM</label>
-              <label class="radio-inline"><input type="radio" name="optradio">PPA</label>
-              <label class="radio-inline"><input type="radio" name="optradio">Binary</label>
+              <label class="radio-inline"><input type="radio" name="optradio" ng-model="data.nodeMethod" value="NVM">NVM</label>
+              <label class="radio-inline"><input type="radio" name="optradio" ng-model="data.nodeMethod" value="PPA">PPA</label>
+              <label class="radio-inline"><input type="radio" name="optradio" ng-model="data.nodeMethod" value="Binary">Binary</label>
+            </div>
+
+            <div class="form-group col-sm-12" ng-if="data.nodeMethod == 'NVM'">
+                <label class="control-label" for="select">Version:</label>
+                <select class="form-control" id="ListOfNodes"
+                        ng-model="data.version"
+                        ng-options="version.name as version.label group by version.cat for version in versions"
+                        >
+                </select>
             </div>
           </div>
         </div>
         <div class="panel panel-default">
           <div class="panel-heading"><strong>Database</strong></div>
           <div class="panel-body">
-            <label class="checkbox-inline"><input type="checkbox" value="">Install MongoDB</label>
+             {{data.roles}}
+             {{installMongo}}
+            <label class="checkbox-inline"><input type="checkbox" ng-model="installMongo" ng-change="roleChanged(installMongo)">Install MongoDB</label>
           </div>
         </div>
         <div class="panel panel-default">
           <div class="panel-heading"><strong>NPM Global Packages</strong></div>
           <div class="panel-body">
             <label for="sel2">Select packages from list (hold shift to select more than one):</label>
-            <select multiple class="form-control" id="sel2">
+            {{data.globalPackages}}
+            <select multiple class="form-control" id="sel2" ng-model="data.globalPackages">
               <option>Yeoman</option>
               <option>Bower</option>
               <option>Grunt</option>

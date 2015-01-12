@@ -1,0 +1,23 @@
+---
+- name: Adding 10gen's public GPG Key to apt's existing key list
+  apt_key: url=http://docs.mongodb.org/10gen-gpg-key.asc state=present
+
+- name: Adding the 10gen repository to apt
+  shell: echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+
+- name: update apt cache
+  apt: update_cache=yes
+
+- name: Installing MongoDB with apt
+  apt: name=mongodb-org state=present
+
+- name: set LC_* environment variables
+  sudo: yes
+  sudo_user: "{{ user }}"
+  lineinfile: >
+    dest=~/.profile
+    line="export LC_ALL=C"
+
+- name: Start the MongoDB database
+  service: name=mongod state=started
+

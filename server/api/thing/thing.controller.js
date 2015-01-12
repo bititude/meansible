@@ -1,65 +1,120 @@
-/**
- * Using Rails-like standard naming convention for endpoints.
- * GET     /things              ->  index
- * POST    /things              ->  create
- * GET     /things/:id          ->  show
- * PUT     /things/:id          ->  update
- * DELETE  /things/:id          ->  destroy
- */
-
 'use strict';
 
 var _ = require('lodash');
+var fs = require('fs-extra');
+var ejs = require('ejs');
+var outputDir = __dirname  + '/downloads/' + 'meansible_';
+
+function ensureExists(path, mask, cb) {
+    if (typeof mask == 'function') { // allow the `mask` parameter to be optional
+        cb = mask;
+        mask = 484;
+    }
+    fs.mkdir(path, mask, function(err) {
+        if (err) {
+           cb(err,null); // something went wrong
+        } else {
+          console.log(path);
+          cb(null,path);
+        }
+        // successfully created folder
+    });
+}
+
+
+// function callback(err,path) {
+//     if (err) {
+//         if (err.code == 'EEXIST') {
+//             outputDir = outputDir + '-' + Date.now();
+//             ensureExists(outputDir, 484, callback); // Call again
+//             // return console.log("A Folder with same name already exists");
+//         } else {
+//             return console.log(err);
+//         };
+//     } else {
+//         return ({msg:"folder created"});
+//     }
+// }
+
+// Generate and Send Scripts
+exports.getScript = function(req, res) {
+  var hostname = req.body.hostname || 'default';
+  outputDir = __dirname  + '/downloads/' + 'meansible_' + hostname;
+
+  ensureExists(outputDir, 484, function callback(err,path) {
+    if (err) {
+        if (err.code == 'EEXIST') {
+            outputDir = outputDir + '-' + Date.now();
+            ensureExists(outputDir, 484, callback); // Call again
+            // return console.log("A Folder with same name already exists");
+        } else {
+            return console.log(err);
+        };
+    }
+
+    var jsondata = req.body;
+
+    //VagrantFile generation
+    fs.readFile(__dirname + "/pages/vagrant.ejs", 'utf-8', function(err, data) {
+      console.log(data);
+      // console.log(data) // => hello!
+      var vagrant_out = ejs.render(data, {data:jsondata});
+      var vagrantFile = path + '/Vagrantfile';
+      fs.outputFile(vagrantFile, vagrant_out, function(err) {
+        console.log(err) // => null
+      });
+    })
+
+    //Playbook generation
+    fs.readFile(__dirname + "/pages/playbook.ejs", 'utf-8', function(err, data) {
+      var playbook_out = ejs.render(data, {data:jsondata});
+      var playbookFile = path + '/playbook.yml';
+      fs.outputFile(playbookFile, playbook_out, function(err) {
+        console.log(err) // => null
+      });
+    })
+
+    //Create Role Files
+    jsondata.roles.forEach(function(role){
+      console.log("The role no processing is :  "+ role);
+      console.log(__dirname + "/pages/roles/" + role + "/tasks/main.ejs");
+      fs.readFile(__dirname + "/pages/roles/" + role + "/tasks/main.ejs", 'utf-8', function(err, data) {
+        console.log(data);
+        var role_out = ejs.render(data, {data:jsondata});
+        var roleFile = path + '/roles/'+ role + '/tasks/main.yml';
+        fs.outputFile(roleFile, role_out, function(err) {
+          console.log(err) // => null
+        });
+      })
+    });
+    // var vagrant_tpl = fs.readFileSync(__dirname + "/pages/vagrant.ejs").toString();
+    // var vagrant_out = ejs.render(vagrant_tpl, {data:data});
+    // var vagrantFile = path + '/Vagrantfile';
+    // fs.outputFile(vagrantFile, vagrant_out, function(err) {
+    //   console.log(err) // => null
+    // })
+
+    // res.sendFile(outputFile);
+});
+
+
+  res.json({"message": "folder created"});
+  // var outputFile = '/assets/downloads/first.zip';
+  // res.send({
+  //   url: outputFile
+  // });
+};
+
 
 // Get list of things
 exports.index = function(req, res) {
-  res.json([
-  {
-  name : 'Development Tools',
-  info : 'Integration with popular tools such as Bower, Grunt, Karma, Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, Stylus, Sass, CoffeeScript, and Less.'
+  res.json([{
+    name: 'Development Tools',
+    info: 'Integration with popular tools such as Bower, Grunt, Karma, Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, Stylus, Sass, CoffeeScript, and Less.'
   }, {
-  name : 'Server and Client integration',
-  info : 'Built with a powerful and fun stack: MongoDB, Express, AngularJS, and Node.'
-  }, {
-  name : 'Smart Build System',
-  info : 'Build system ignores `spec` files, allowing you to keep tests alongside code. Automatic injection of scripts and styles into your index.html'
-  },  {
-  name : 'Modular Structure',
-  info : 'Best practice client and server structures allow for more code reusability and maximum scalability'
-  },  {
-  name : 'Optimized Build',
-  info : 'Build process packs up your templates as a single JavaScript payload, minifies your scripts/css/images, and rewrites asset names for caching.'
-  },{
-  name : 'Deployment Ready',
-  info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
-  }
-  ]);
+    name: 'Server and Client integration',
+    info: 'Built with a powerful and fun stack: MongoDB, Express, AngularJS, and Node.'
+  }]);
 };
 
 
-// Retrieve NodeJS versions
-exports.getNodeVersions = function(req, res) {
-
-  var url = "http://nodejs.org/dist/npm-versions.txt";
-  
-  res.json([
-  {
-  name : 'Development Tools',
-  info : 'stable'
-  }, {
-  name : 'Server and Client integration',
-  info : 'unstable'
-  }, {
-  name : 'Smart Build System',
-  info : 'old'
-  }
-  ]);
-};
-
-
-exports.downloadgen = function(req,res){
-  console.log("Somehow I reached here..");
-  console.log(req.body)
-  var outputFile = '/assets/downloads/first.zip';
-  res.send({url : outputFile});
-}

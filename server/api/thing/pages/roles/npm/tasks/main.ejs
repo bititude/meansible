@@ -1,0 +1,12 @@
+---
+- name: Install NPM packages globally
+  npm:  name={{item}}
+        global=yes
+        executable=/home/vagrant/.nvm/v0.10.33/bin/npm
+  with_items:
+    - express
+    - grunt-cli
+    - grunt
+    - bower
+    - yo
+    - generator-angular-fullstack

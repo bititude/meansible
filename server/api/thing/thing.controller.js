@@ -4,6 +4,7 @@ var _ = require('lodash');
 var fs = require('fs-extra');
 var ejs = require('ejs');
 var outputDir = __dirname  + '/downloads/' + 'meansible_';
+var async = require('async');
 
 function ensureExists(path, mask, cb) {
     if (typeof mask == 'function') { // allow the `mask` parameter to be optional
@@ -54,15 +55,20 @@ exports.getScript = function(req, res) {
 
     var jsondata = req.body;
 
+    async.parallel([
+        function(){ ... },
+        function(){ ... }
+    ], callback);
+
+
     //VagrantFile generation
-    fs.readFile(__dirname + "/pages/vagrant.ejs", 'utf-8', function(err, data) {
-      console.log(data);
-      // console.log(data) // => hello!
+    fs.readFile(__dirname + "/pages/vagrant.ejs", 'utf-8', function(err, data) {      
+      // console.log(data) 
       var vagrant_out = ejs.render(data, {data:jsondata});
       var vagrantFile = path + '/Vagrantfile';
       fs.outputFile(vagrantFile, vagrant_out, function(err) {
-        console.log(err) // => null
-      });
+        console.log(err) 
+      });  
     })
 
     //Playbook generation
@@ -76,10 +82,8 @@ exports.getScript = function(req, res) {
 
     //Create Role Files
     jsondata.roles.forEach(function(role){
-      console.log("The role no processing is :  "+ role);
-      console.log(__dirname + "/pages/roles/" + role + "/tasks/main.ejs");
       fs.readFile(__dirname + "/pages/roles/" + role + "/tasks/main.ejs", 'utf-8', function(err, data) {
-        console.log(data);
+        // console.log(data);
         var role_out = ejs.render(data, {data:jsondata});
         var roleFile = path + '/roles/'+ role + '/tasks/main.yml';
         fs.outputFile(roleFile, role_out, function(err) {
@@ -87,15 +91,9 @@ exports.getScript = function(req, res) {
         });
       })
     });
-    // var vagrant_tpl = fs.readFileSync(__dirname + "/pages/vagrant.ejs").toString();
-    // var vagrant_out = ejs.render(vagrant_tpl, {data:data});
-    // var vagrantFile = path + '/Vagrantfile';
-    // fs.outputFile(vagrantFile, vagrant_out, function(err) {
-    //   console.log(err) // => null
-    // })
 
     // res.sendFile(outputFile);
-});
+  });
 
 
   res.json({"message": "folder created"});

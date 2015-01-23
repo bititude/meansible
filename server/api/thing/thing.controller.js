@@ -7,7 +7,7 @@ var outputDir = __dirname  + '/downloads/' + 'meansible_';
 var custDir = 'meansible_';
 var async = require('async');
 var AdmZip = require('adm-zip');
-
+var path = require('path');
 
 function ensureExists(path, mask, cb) {
     if (typeof mask == 'function') { // allow the `mask` parameter to be optional
@@ -18,32 +18,18 @@ function ensureExists(path, mask, cb) {
         if (err) {
            cb(err,null); // something went wrong
         } else {
-          console.log(path);
+          // console.log(path);
           cb(null,path);
         }
         // successfully created folder
     });
 }
 
-
-// function callback(err,path) {
-//     if (err) {
-//         if (err.code == 'EEXIST') {
-//             outputDir = outputDir + '-' + Date.now();
-//             ensureExists(outputDir, 484, callback); // Call again
-//             // return console.log("A Folder with same name already exists");
-//         } else {
-//             return console.log(err);
-//         };
-//     } else {
-//         return ({msg:"folder created"});
-//     }
-// }
-
 // Generate and Send Scripts
 exports.getScript = function(req, res) {
   var hostname = req.body.hostname || 'default';
-  outputDir = __dirname  + '/downloads/' + 'meansible_' + hostname;
+  var outputDir = path.normalize(__dirname + '/../../../client/assets/downloads/meansible_' + hostname)
+  // outputDir = __dirname  + '/downloads/' + 'meansible_' + hostname;
   custDir = 'meansible_' + hostname;
 
   async.waterfall([
@@ -67,7 +53,7 @@ exports.getScript = function(req, res) {
     },
 
     function(path,cb){
-      console.log("hhhhhhhhhhhh" + "  " + path)
+      // console.log("hhhhhhhhhhhh" + "  " + path)
       var jsondata = req.body;
       //VagrantFile generation
       fs.readFile(__dirname + "/pages/vagrant.ejs", 'utf-8', function(err, data) {      
@@ -106,17 +92,17 @@ exports.getScript = function(req, res) {
       
     },
 
-    function(path,arg1,cb){
-      console.log("The path is : ----" ,path,"-------")
+    function(path1,arg1,cb){
+      // console.log("The path is : ----" ,path1,"-------")
       var zip = new AdmZip();
-      zip.addLocalFolder(path);
-      zip.writeZip("/media/export/Documents/others/meansible/client/assets/downloads/test.zip");      
-      cb(null,"/assets/downloads/test.zip");
+      zip.addLocalFolder(path1);
+      zip.writeZip(path1 + ".zip");      
+      cb(null,"/assets/downloads/" + path.basename(path1 + ".zip"));
     }
   ], function cb (err,result){
       console.log(result);
       res.send({
-        url: results
+        url: result
       });
   });
 
@@ -128,18 +114,6 @@ exports.getScript = function(req, res) {
   // res.send({
   //   url: outputFile
   // });
-};
-
-
-// Get list of things
-exports.index = function(req, res) {
-  res.json([{
-    name: 'Development Tools',
-    info: 'Integration with popular tools such as Bower, Grunt, Karma, Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, Stylus, Sass, CoffeeScript, and Less.'
-  }, {
-    name: 'Server and Client integration',
-    info: 'Built with a powerful and fun stack: MongoDB, Express, AngularJS, and Node.'
-  }]);
 };
 
 

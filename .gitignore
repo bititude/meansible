@@ -3,6 +3,8 @@ public
 .tmp
 .idea
 client/bower_components
+client/assets/downloads
 dist
 /server/config/local.env.js
 /server/api/thing/downloads
+

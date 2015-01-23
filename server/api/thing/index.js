@@ -6,6 +6,6 @@ var controller = require('./thing.controller');
 var router = express.Router();
 
 // router.get('/', controller.index);
-router.post('/', controller.getScript);
+router.post('/', controller.downloadGen, controller.getScript);
 
 module.exports = router;

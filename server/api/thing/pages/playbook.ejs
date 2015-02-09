@@ -1,0 +1,19 @@
+---
+- hosts: all
+  sudo: true
+  vars:
+    node_version: "<%- data.version || 'v0.10.35'%>"
+    user: vagrant
+
+  pre_tasks:
+    - name: update apt cache
+      apt: update_cache=yes
+
+    - name: Install dependencies
+      apt: name={{ item }} state=present
+      with_items:
+      <% data.defaultPackages.forEach(function(package) { %> - <%= package %>
+      <% }); %>
+  roles:
+  <% data.roles.forEach(function(role) { %> - <%= role %>
+  <% }); %>

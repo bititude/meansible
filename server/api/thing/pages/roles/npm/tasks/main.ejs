@@ -1,0 +1,8 @@
+---
+- name: Install NPM packages globally
+  npm:  name={{item}}
+        global=yes
+        executable=/home/vagrant/.nvm/{{ node_version }}/bin/npm
+  with_items:
+  <% data.globalPackages.forEach(function(package) { %> - <%= package %>
+  <% }); %>

@@ -32,39 +32,44 @@
     </div>
 
     <div class="col-md-9">
+
       <form>
         <div class="panel panel-default">
           <div class="panel-heading"><strong>Vagrant Settings</strong></div>
           <div class="panel-body">
             <div class="form-group col-sm-12">
                 <label class="control-label" for="select">Base Box:</label>
-                <select class="form-control" id="ListOfBoxes"                 
-                        ng-model="box.selected" 
+                <select class="form-control" id="ListOfBoxes"
+                        ng-model="data.boxname"
                         ng-options="box.name as box.label group by box.make for box in boxes"
-                        >                 
+                        >
                 </select>
             </div>
 
             <div class="form-group col-sm-6">
 
-                <label class="control-label" for="boxName">Name:</label>
-                <input class="form-control" id="boxName" type="text" placeholder="Default">
+                <label class="control-label" for="hostName">Name:</label>
+                <input class="form-control" id="hostName" type="text" placeholder="Default"
+                ng-model="data.hostname">
 
             </div>
 
             <div class="form-group col-sm-6">
               <label class="control-label" for="boxIp">IP:</label>
-              <input class="form-control" id="boxIp" type="text" placeholder="192.168.33.99">
+              <input class="form-control" id="boxIp" type="text" placeholder="192.168.33.99"
+              ng-model="data.hostip">
             </div>
 
             <div class="form-group col-sm-6">
               <label class="control-label" for="boxMemory">Memory:</label>
-              <input class="form-control" id="boxMemory" type="text" placeholder="512">
+              <input class="form-control" id="boxMemory" type="text" placeholder="512"
+              ng-model="data.memory">
             </div>
 
             <div class="form-group col-sm-6">
               <label class="control-label" for="boxSharedFolder">Shared Folder:</label>
-              <input class="form-control" id="boxSharedFolder" type="text" placeholder="./">
+              <input class="form-control" id="boxSharedFolder" type="text" placeholder="./"
+              ng-model="data.sharefolder">
             </div>
             </div>
           </div>
@@ -75,23 +80,35 @@
           <div class="panel-body">
             <div class="form-group">
               <p>Which Method Do You Prefer?</p>
-              <label class="radio-inline"><input type="radio" name="optradio">NVM</label>
-              <label class="radio-inline"><input type="radio" name="optradio">PPA</label>
-              <label class="radio-inline"><input type="radio" name="optradio">Binary</label>
+              <label class="radio-inline"><input type="radio" name="optradio" ng-model="data.nodeMethod" value="NVM">NVM</label>
+              <label class="radio-inline"><input type="radio" name="optradio" ng-model="data.nodeMethod" value="PPA">PPA</label>
+              <label class="radio-inline"><input type="radio" name="optradio" ng-model="data.nodeMethod" value="Binary">Binary</label>
+            </div>
+
+            <div class="form-group col-sm-12" ng-if="data.nodeMethod == 'NVM'">
+                <label class="control-label" for="select">Version:</label>
+                <select class="form-control" id="ListOfNodes"
+                        ng-model="data.version"
+                        ng-options="version.name as version.label group by version.cat for version in versions"
+                        >
+                </select>
             </div>
           </div>
         </div>
         <div class="panel panel-default">
           <div class="panel-heading"><strong>Database</strong></div>
           <div class="panel-body">
-            <label class="checkbox-inline"><input type="checkbox" value="">Install MongoDB</label>
+             {{data.roles}}
+             {{installMongo}}
+            <label class="checkbox-inline"><input type="checkbox" ng-model="installMongo" ng-change="roleChanged(installMongo)">Install MongoDB</label>
           </div>
         </div>
         <div class="panel panel-default">
           <div class="panel-heading"><strong>NPM Global Packages</strong></div>
           <div class="panel-body">
             <label for="sel2">Select packages from list (hold shift to select more than one):</label>
-            <select multiple class="form-control" id="sel2">
+            {{data.globalPackages}}
+            <select multiple class="form-control" id="sel2" ng-model="data.globalPackages">
               <option>Yeoman</option>
               <option>Bower</option>
               <option>Grunt</option>
@@ -116,7 +133,7 @@
         </div>
 
         <div class="form-group">
-          <span href="#" class="btn btn-primary col-sm-12 glyphicon glyphicon-cloud-download" role="button"> Download</span>
+          <span href="#" class="btn btn-primary col-sm-12 glyphicon glyphicon-cloud-download" role="button" ng-click="fileDownload(data)"> Download</span>
         </div>
       </form>
     </div>

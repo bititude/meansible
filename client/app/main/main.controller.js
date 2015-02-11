@@ -2,15 +2,28 @@
 
 angular.module('meansibleApp')
   .controller('MainCtrl', function($scope, $http, $window, Box, NodeVersions, ScriptDownload) {
-
+    $scope._ = _;
     $scope.awesomeThings = [];
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
     });
 
+    $scope.value1 = false;
     $scope.box = {
       selected: "0"
     };
+
+    $scope.addPorts = function(guest,host){
+      $scope.data.ports.push({"guest": guest,"host": host})
+      $scope.data.guestPort = "";
+      $scope.data.hostPort = "";
+    }
+
+    $scope.removePorts = function(x){
+      console.log(x)
+      $scope.data.ports = _.without($scope.data.ports, x)
+      console.log($scope.data.ports);      
+    }
 
     $scope.installMongo = true;
     $scope.roleChanged = function(data){

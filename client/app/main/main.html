@@ -11,7 +11,6 @@
 <div class="main container">
   <div class="row">
     <div class="col-md-3">
-
       <ul class="list-group">
         <li class="list-group-item">
           Vagrant Settings
@@ -47,11 +46,9 @@
             </div>
 
             <div class="form-group col-sm-6">
-
                 <label class="control-label" for="hostName">Name:</label>
                 <input class="form-control" id="hostName" type="text" placeholder="Default"
                 ng-model="data.hostname">
-
             </div>
 
             <div class="form-group col-sm-6">
@@ -71,9 +68,41 @@
               <input class="form-control" id="boxSharedFolder" type="text" placeholder="./"
               ng-model="data.sharefolder">
             </div>
-            </div>
-          </div>
 
+            <div class="form-group col-sm-12"><label><input type="checkbox" ng-model="value1"> Advanced Settings</label></div>            
+            <div class="form-group col-sm-12" ng-show="value1"> 
+              <label class="control-label col-sm-2" for="boxPort">Box Port:</label> 
+              <span class="col-sm-3"><input class="form-control" id="boxPort" type="text" placeholder="80"
+              ng-model="data.guestPort"></span>
+              <label class="control-label col-sm-2" for="hostPort">Host Port:</label> 
+              <span class="col-sm-3"><input class="form-control col-sm-6" id="hostPort" type="text" placeholder="8080"
+              ng-model="data.hostPort"></span>
+              <span href="#" class="btn btn-primary btn-md" role="button" ng-click="addPorts(data.guestPort,data.hostPort)">Add</span>
+            
+
+
+              <table class="table table-striped table-hover ">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Box Port</th>
+                    <th>Host Port</th> 
+                    <th></th>                   
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="x in data.ports">
+                    <td>{{$index + 1}}</td>
+                    <td>{{ x.guest }}</td>
+                    <td>{{ x.host }}</td>
+                    <td><span href="#" class="btn btn-danger btn-sm" role="button" ng-click="removePorts(x)">Remove</span></td>
+                  </tr>
+                 </tbody>
+              </table> 
+            </div>            
+          </div>
+          
+        </div>
 
         <div class="panel panel-default">
           <div class="panel-heading"><strong>Node.js</strong></div>
@@ -145,5 +174,9 @@
       <p>Meansible v0.0.1 |
         <a href="https://twitter.com/meansible">@meansible</a> |
          <a href="https://github.com/jasnantp/meansible/issues?state=open">Issues</a></p>
+
+      <p>Designed and built with all the love in the world by <a href="https://github.com/jasnan" target="_blank">@jasnan</a></p>
+      <p>Maintained by the <a href="https://github.com/orgs/bititude/people">core team at bititude</a></p>
+      <p>Code licensed under <a href="https://github.com/bititude/meansible/blob/master/LICENSE" target="_blank">MIT</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>   
   </div>
 </footer>

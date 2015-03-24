@@ -1,7 +1,13 @@
 # Meansible Docs
+
+
 ## Introduction
-Meansible is an easy-to-use interface to generate Meansible playbooks for MEAN projects. With Minimal Setup, you can, with a simple and efficient GUI, configure a VM for use in a MEAN project. 
+Meansible is an easy-to-use interface to generate Ansible playbooks for MEAN projects. With Minimal Setup, you can, with a simple and efficient GUI, configure a VM for use in a MEAN project. 
 We believe in choice, so you are given multiple config options on how to set up your VM.
+
+
+## What is Ansible?
+Ansible is an open source automation platform. It is very, very simple to setup and yet powerful. Ansible can help you with configuration management, application deployment, task automation. Ansible requires files called "Playbooks" which specify ,in this case, how the VM must be provisioned. Meansible gives you a simple GUI and lets you download the playbook
 
 ## Instructions
 

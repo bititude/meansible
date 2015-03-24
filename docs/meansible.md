@@ -17,7 +17,7 @@ Give your VM instance an IP. for use with SSH, access, etc etc.
 what amount of memory is your VM going to consume? We recommend an amount below half your System Memory.
 ####Shared Folder
 Which is the folder you want to sync between your VM and your Local Machine?
-### NODE JS Select how you would like to install NODE, and which version
+### NODE JS Select how you would like to install Node.js, and which version
 
 #### Chooose your Db
 If you want to install MongoDB , Check the box.

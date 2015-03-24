@@ -20,8 +20,9 @@ Which is the folder you want to sync between your VM and your Local Machine?
 ### NODE JS Select how you would like to install NODE, and which version
 
 #### Chooose your Db
-If you want to install MONGO DB , Check the box.
-#### NPM GLOBAL PACAGES Which packages do you want installed globally on your VM
+If you want to install MongoDB , Check the box.
+#### NPM GLOBAL PACKAGES 
+Which packages do you want installed globally on your VM
 ####Default PACKAGES,
 
 These are a list of packages you will need to install by Default.

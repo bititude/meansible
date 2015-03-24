@@ -7,19 +7,19 @@ We believe in choice, so you are given multiple config options on how to set up 
 
 ### Vagrant Settings
 #### Base BOX 
-You have an array of Linux Distributions to choose from. CHoose what you want your base box to be.
+You have an array of Linux Distributions to choose from. Choose what you want your base box to be.
 
 #### Name
-Give your base Box a name, Ya know, to make it yours
+Give your base Box a name, You know, to make it yours
 #### IP
 Give your VM instance an IP. for use with SSH, access, etc etc.
 #### MEMORY
 what amount of memory is your VM going to consume? We recommend an amount below half your System Memory.
 ####Shared Folder
 Which is the folder you want to sync between your VM and your Local Machine?
-### NODE JS Select how you would like to install Node.js, and which version
+###Select how you would like to install Node.js, and which version
 
-#### Chooose your Db
+#### Chooose your Database
 If you want to install MongoDB , Check the box.
 #### NPM GLOBAL PACKAGES 
 Which packages do you want installed globally on your VM
